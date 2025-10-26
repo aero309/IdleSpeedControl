@@ -14,10 +14,16 @@ lambda = 1; % A/F ratio
 
 alpha0 = 3e-6;
 alpha1 = 6e-6;
-Vm = 7e-3;
+Vm_guess = 7e-3;
 gamma0 = 0.6;
 gamma1 = 0.002;
 nu0 = 0.3;
 nu1 = -3e-4;
 beta0 = 7;
 theta_e = 0.2;
+
+
+%% Initial conditions
+initial_omega_e = meas.omega_e.signals.values(1);
+initial_p_m = meas.p_m.signals.values(1);
+
