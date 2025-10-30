@@ -1,4 +1,4 @@
-function V = ModelError(par, data, options)
+function V = ModelErrorIM(par, data, options)
 
     % Extract parameter
     p_initial = data.p_m.signals.values(1);

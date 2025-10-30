@@ -15,6 +15,7 @@ lambda = 1; % A/F ratio
 alpha0 = 3e-6;
 alpha1 = 6e-6;
 Vm_guess = 7e-3;
+Vm = Vm_guess;
 gamma0 = 0.6;
 gamma1 = 0.002;
 nu0 = 0.3;
