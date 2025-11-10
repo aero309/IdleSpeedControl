@@ -1,6 +1,3 @@
-function Linearization()
-    u_alpha_nom = 2;
-    Delta_u_zeta_nom = -25;
 
     p_m_nom = 23000; 
     omega_e_nom = 128; 
@@ -36,11 +33,10 @@ function Linearization()
     assignin('base', 'C_pade_seg', C_pade_seg);
     assignin('base', 'D_pade_seg', D_pade_seg);
     
-    [A_lin, B_lin, C_lin, D_lin] = linmod('NonLinearModelNorm');
+    [A_lin, B_lin, C_lin, D_lin] = linmod('NonLinearModelNorm', ones(1,10), ones(1,2));
     
     sys_linear = ss(A_lin, B_lin, C_lin, D_lin);
     save('LinearizedModel.mat', 'A_lin', 'B_lin', 'C_lin', 'D_lin', 'sys_linear');
     
 
     fprintf('System order: %d states\n', size(A_lin, 1));
-end
