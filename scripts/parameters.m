@@ -28,3 +28,8 @@ theta_e = 0.2;
 initial_omega_e = meas.omega_e.signals.values(1);
 initial_p_m = meas.p_m.signals.values(1);
 
+%% Normalized Values
+omega_e_norm=128;         %[rad/s]
+u_alpha_norm=2;           %[-]
+du_ign_norm=-25;          %[
+
