@@ -1,9 +1,14 @@
 
+u_alpha_nom = 2;
+
 p_m_nom = 23519.6; 
 omega_e_nom = 100.43; 
 
 p_m_initial = p_m_nom;
 omega_e_initial = omega_e_nom;
+
+ratio_nom = 30.1967e-6;
+du_ign_nom = -25;
 
 pade_order = 4;
 
@@ -45,8 +50,8 @@ fprintf('System order: %d states\n', size(A_lin, 1));
 %%
 load("..\TAData\quasistatic_0001.mat")
 % Run a simulation with the identified optimal variable values
-    simOut = sim('mainModelComp.slx', meas.T_m.time, options.sim_options);
-    simOutLinear = sim('LinearizedModel.slx', meas.T_m.time, options.sim_options);
+    simOut = sim('NonLinearModelNoPade.slx', 0:0.001:60, options.sim_options);
+    simOutLinear = sim('LinearizedModel.slx', 0:0.001:60, options.sim_options);
 
 
     omega_e_sim = simOut.get('yout');
