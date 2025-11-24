@@ -51,3 +51,9 @@ ISCSAd = sysD.A;
 ISCSBd = sysD.B;
 ISCSCd = sysD.C;
 ISCSDd = sysD.D;
+
+ISCS_Ty = omega_e_nom;                         % output normalization
+ISCS_Tu = diag([u_alpha_nom, du_ign_nom]);     % input normalization
+Ts   = 0.001;
+
+
