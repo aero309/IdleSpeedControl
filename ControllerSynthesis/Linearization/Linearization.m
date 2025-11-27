@@ -10,6 +10,12 @@ omega_e_initial = omega_e_nom;
 ratio_nom = 30.1967e-6;
 du_ign_nom = -25;
 
+p_e_nom = 1e5;
+T_m_nom = 293;
+
+T_a_nom = 295.7435;
+p_a_nom = 9.5883e+04;
+
 pade_order = 4;
 
 tau_IPS_nom = 2 * pi / (omega_e_nom );
@@ -48,7 +54,7 @@ fprintf('System order: %d states\n', size(A_lin, 1));
 
 
 %%
-load("..\TAData\quasistatic_0001.mat")
+load("..\..\TAData\quasistatic_0001.mat")
 % Run a simulation with the identified optimal variable values
     simOut = sim('NonLinearModelNoPade.slx', 0:0.001:60, options.sim_options);
     simOutLinear = sim('LinearizedModel.slx', 0:0.001:60, options.sim_options);

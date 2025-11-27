@@ -2,8 +2,8 @@
 
 %Tuning Parameters
 KI = 1; %Larger integral action for larger KI
-r1 = 1;
-r2 = 1;
+r1 = 0.5e-1;
+r2 = 0.5e-1;
 
 %Extension Matrices
 Ae = 0;
@@ -32,7 +32,7 @@ Q = C' * C;
 K = lqr(A, B, Q, R_mat);
 
 %Observer
-q = 0.001;                      
+q = 0.0001;                      
 L = lqr(A', C', B*B', q)';      
 
 %Matricies
