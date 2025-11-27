@@ -32,7 +32,7 @@ Q = C' * C;
 K = lqr(A, B, Q, R_mat);
 
 %Observer
-q = 0.01;                      
+q = 0.001;                      
 L = lqr(A', C', B*B', q)';      
 
 %Matricies
