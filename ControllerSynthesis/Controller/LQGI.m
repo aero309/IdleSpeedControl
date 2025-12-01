@@ -1,9 +1,9 @@
 %run scripts\parameters.m
 
 %Tuning Parameters
-KI = 1; %Larger integral action for larger KI
-r1 = 0.5e-1;
-r2 = 0.5e-1;
+KI = 6; %Larger integral action for larger KI
+r1 = 8;
+r2 = 4;
 
 %Extension Matrices
 Ae = 0;
@@ -32,7 +32,7 @@ Q = C' * C;
 K = lqr(A, B, Q, R_mat);
 
 %Observer
-q = 0.0001;                      
+q = 1 * 10^(-3);                      
 L = lqr(A', C', B*B', q)';      
 
 %Matricies
@@ -48,13 +48,47 @@ ISCS_D_c = [De*D_c];
 sysC = ss(ISCS_A_c, ISCS_B_c, ISCS_C_c, ISCS_D_c);
 sysD = c2d(sysC, 0.001, 'tustin');
 
-ISCSAd = sysD.A;
-ISCSBd = sysD.B;
-ISCSCd = sysD.C;
-ISCSDd = sysD.D;
+ISCS_Ad = sysD.A;
+ISCS_Bd = sysD.B;
+ISCS_Cd = sysD.C;
+ISCS_Dd = sysD.D;
 
 ISCS_Ty = omega_e_nom;                         % output normalization
 ISCS_Tu = diag([u_alpha_nom, du_ign_nom]);     % input normalization
 Ts   = 0.001;
+
+
+%%Tuning
+%Poles
+%Observer
+obs= A - L*C;
+P_obs = real(eig(obs));
+P_obs_max = abs(max(P_obs));
+
+%Controllertf
+cont= A - B*K;
+P_cont = real(eig(cont));
+P_cont_max = abs(max(P_cont));
+
+aa_ratio = P_obs_max / P_cont_max;
+disp(['ratio observer/controller speed: ', num2str(aa_ratio)]);
+
+%Crossover
+TF_cont = tf(ss(ISCS_A_c, ISCS_B_c, ISCS_C_c, ISCS_D_c ));
+TF_plant = tf(ss(A_lin, B_lin, C_lin, D_lin));
+TF_L = series(TF_cont, TF_plant);
+
+%TF_L = TF_cont .* TF_plant';
+bode(TF_L);
+[GM, PM, Wgm, Wpm] = margin(TF_L);
+disp(['Phase Margin: ', num2str(PM)]);
+disp(['Gain Crossover Freq.: ', num2str(Wpm)]);
+info = [KI, r1, r2, q];
+disp(['KI, r1 , r2, q: ', num2str(info)]);
+
+save('controllerx.mat', ...
+    'ISCS_Ad', 'ISCS_Bd', 'ISCS_Cd', 'ISCS_Dd', ...
+    'ISCS_Ty', 'ISCS_Tu');
+
 
 
